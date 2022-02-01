@@ -1,25 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Header({ title }) {
+export default function PurchaseLog({ title }) {
 
     return(
 
         <Container>
-            <h1>{title}</h1>
+            <h1>Não há registros de entrada ou saída</h1>
 
         </Container>
     );
 }
-
-
 // ::::::::::Styled-Components::::::::::
 const Container = styled.div`
     width: 100%;
-    margin-bottom: 22px;
-    h1{
-        font-size: 26px;
-        font-weight: 700;
-        color: #FFF;
-    }
+    height: 446px;
+    background-color: #FFF;
+    border-radius: 5px;
 `

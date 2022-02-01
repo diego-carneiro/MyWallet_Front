@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
+import PurchaseLog from "../components/PurchaseLog";
+import ButtonLayer from "../components/ButtonLayer";
 
 export default function MainMenu() {
 
@@ -11,7 +13,8 @@ export default function MainMenu() {
     return (
         <Container>
             <Header title={"Olá, Fulano"}/>
-
+            <PurchaseLog />
+            <ButtonLayer />
         </Container>
     );
 
