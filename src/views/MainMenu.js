@@ -10,9 +10,11 @@ export default function MainMenu() {
 
     const navigate = useNavigate();
 
+    const name = "Zé"
+
     return (
         <Container>
-            <Header title={"Olá, Fulano"}/>
+            <Header title={`Olá, ${name}`} />
             <PurchaseLog />
             <ButtonLayer />
         </Container>

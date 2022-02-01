@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+import ActionButton from "../components/ActionButton";
+
 export default function Login() {
 
     const navigate = useNavigate();
@@ -13,9 +15,7 @@ export default function Login() {
             </Title>
             <Input placeholder="E-mail"/>
             <Input placeholder="Senha"/>
-            <Button onClick={() => navigate("/main-menu")}>
-                <p>Entrar</p>
-            </Button>
+            <ActionButton action={"Entrar"} path={"main-menu"}/>
             <SignUp onClick={() => navigate("/signup")}>
                 <h2>Primeira vez? Cadastre-se!</h2>
             </SignUp>
@@ -51,22 +51,9 @@ const Input = styled.input`
     padding: 15px;
     color: #000000;
     margin-bottom: 13px;
-`
-const Button = styled.button`
-    width: 100%;
-    height: 46px;
-    border-radius: 5px;
-    background-color: #A328D6;
-    border: none;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    p{
-        font-size: 20px;
-        font-weight: 700;
-        color: #FFF;
+    ::placeholder{
+        color: #000000;
     }
 `
 const SignUp = styled.div`

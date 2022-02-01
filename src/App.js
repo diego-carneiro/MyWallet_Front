@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";
 import MainMenu from "./views/MainMenu";
+import NewInput from "./views/NewInput";
+import NewOutput from "./views/NewOutput";
 
 export default function App() {
 
@@ -15,8 +17,9 @@ export default function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/main-menu" element={<MainMenu />} />
+        <Route path="/new-input" element={<NewInput />} />
+        <Route path="/new-output" element={<NewOutput />} />
       </Routes>
     </BrowserRouter>
-
   );
 }
