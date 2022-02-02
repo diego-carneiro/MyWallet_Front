@@ -10,6 +10,7 @@ export default function SignUp() {
 
 
     const navigate = useNavigate();
+    const [validate, setValidate] = useState(true);
     const { triggerWarning, setTriggerWarning } = React.useContext(AuthContext);
     const initialValue = {
         name: "",
@@ -27,12 +28,18 @@ export default function SignUp() {
 
     function onSubmit(ev) {
         ev.preventDefault();
+
         if (inputs.password !== inputs.confirm) {
-            setTriggerWarning("triggered");
+            setTriggerWarning("passwordConflict");
+        }
+
+        if (emailRegex.test(inputs.email) === false){
+            setTriggerWarning("invalidEmail");
         }
     }
 
-    console.log({ inputs });
+    const nameRegex = /^[a-z]{0,10}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     return (
         <>
@@ -53,7 +60,8 @@ export default function SignUp() {
                     </Login>
                 </Form>
             </Container>
-            {triggerWarning && <WarningScreen />}
+            {triggerWarning === "passwordConflict" && <WarningScreen warningText={"As senhas não coincidem!"}/>}
+            {triggerWarning === "invalidEmail" && <WarningScreen warningText={"Insira um e-mail válido"}/>}
         </>
 
     );

@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 export default function PurchaseLog({ title }) {
 
-    return(
+    return (
 
         <Container>
-            <h1>Não há registros de entrada ou saída</h1>
+            <h1>Não há registros de<br />entrada ou saída</h1>
 
         </Container>
     );
@@ -17,4 +17,14 @@ const Container = styled.div`
     height: 446px;
     background-color: #FFF;
     border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1{
+        font-size: 20px;
+        color: #868686;
+        text-align: center;
+    }
 `
