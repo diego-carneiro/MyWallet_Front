@@ -1,27 +1,61 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { AuthContext } from "../providers/auth";
 
-export default function Login() {
+import WarningScreen from "../components/WarningScreen";
+
+export default function SignUp() {
+
 
     const navigate = useNavigate();
+    const { triggerWarning, setTriggerWarning } = React.useContext(AuthContext);
+    const initialValue = {
+        name: "",
+        email: "",
+        password: "",
+        confirm: "",
+    };
+    const [inputs, setInputs] = useState(initialValue);
+
+    function onChange(ev) {
+        const { name, value } = ev.target;
+
+        setInputs({ ...inputs, [name]: value });
+    }
+
+    function onSubmit(ev) {
+        ev.preventDefault();
+        if (inputs.password !== inputs.confirm) {
+            setTriggerWarning("triggered");
+        }
+    }
+
+    console.log({ inputs });
 
     return (
-        <Container>
-            <Title>
-                <h1>MyWallet</h1>
-            </Title>
-            <Input placeholder="Nome"/>
-            <Input placeholder="E-mail"/>
-            <Input placeholder="Senha"/>
-            <Input placeholder="Confirme a senha"/>
-            <Button>
-                <p>Cadastrar</p>
-            </Button>
-            <SignUp onClick={() => navigate("/")}>
-                <h2>Já tem uma conta? Entre agora!</h2>
-            </SignUp>
-        </Container>
+        <>
+            <Container triggered={triggerWarning}>
+                <Title>
+                    <h1>MyWallet</h1>
+                </Title>
+                <Form onSubmit={onSubmit}>
+                    <Input placeholder="Nome" name="name" type="text" onChange={onChange} />
+                    <Input placeholder="E-mail" name="email" type="email" onChange={onChange} />
+                    <Input placeholder="Senha" name="password" type="password" onChange={onChange} />
+                    <Input placeholder="Confirme a senha" name="confirm" type="password" onChange={onChange} />
+                    <Button type="submit">
+                        <p>Cadastrar</p>
+                    </Button>
+                    <Login onClick={() => navigate("/")}>
+                        <h2>Já tem uma conta? Entre agora!</h2>
+                    </Login>
+                </Form>
+            </Container>
+            {triggerWarning && <WarningScreen />}
+        </>
+
     );
 
 }
@@ -31,11 +65,14 @@ const Container = styled.div`
     min-height: 100vh;
     background-color: #8C11BE;
     padding: 25px;
+    filter: brightness(${props => props.triggered ? "0.3" : "1"});
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    z-index: 2;
 `
 const Title = styled.div`
     h1{
@@ -43,6 +80,12 @@ const Title = styled.div`
         color: #FFFFFF;
     }
     margin-bottom: 25px;
+`
+const Form = styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 const Input = styled.input`
     width: 100%;
@@ -71,7 +114,7 @@ const Button = styled.button`
         color: #FFF;
     }
 `
-const SignUp = styled.div`
+const Login = styled.div`
     h2{
         font-size: 15px;
         font-weight: 700;
