@@ -15,7 +15,7 @@ export default function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/main-menu" element={<MainMenu />} />
         <Route path="/new-input" element={<NewInput />} />
         <Route path="/new-output" element={<NewOutput />} />

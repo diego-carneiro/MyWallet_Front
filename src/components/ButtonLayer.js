@@ -5,8 +5,6 @@ import { AiOutlinePlusCircle } from "react-icons/ai"
 import { AiOutlineMinusCircle } from "react-icons/ai"
 import { IconContext } from "react-icons";
 
-
-
 export default function ButtonLayer() {
 
     const navigate = useNavigate();
@@ -28,8 +26,6 @@ export default function ButtonLayer() {
         </Container>
     );
 }
-
-
 // ::::::::::Styled-Components::::::::::
 const Container = styled.div`
     width: 100%;

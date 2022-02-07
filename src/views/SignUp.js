@@ -3,14 +3,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AuthContext } from "../providers/auth";
+import axios from "axios";
 
 import WarningScreen from "../components/WarningScreen";
 
 export default function SignUp() {
 
-
     const navigate = useNavigate();
-    const [validate, setValidate] = useState(true);
     const { triggerWarning, setTriggerWarning } = React.useContext(AuthContext);
     const initialValue = {
         name: "",
@@ -31,11 +30,19 @@ export default function SignUp() {
 
         if (inputs.password !== inputs.confirm) {
             setTriggerWarning("passwordConflict");
+            return;
         }
 
         if (emailRegex.test(inputs.email) === false){
             setTriggerWarning("invalidEmail");
+            return;
         }
+
+        const promise = axios.post("http://localhost:5000/sign-up/", inputs);
+        promise.then(response => {
+            navigate("/")
+        });
+        promise.catch(error => alert(error));
     }
 
     const nameRegex = /^[a-z]{0,10}$/;
@@ -63,7 +70,6 @@ export default function SignUp() {
             {triggerWarning === "passwordConflict" && <WarningScreen warningText={"As senhas não coincidem!"}/>}
             {triggerWarning === "invalidEmail" && <WarningScreen warningText={"Insira um e-mail válido"}/>}
         </>
-
     );
 
 }

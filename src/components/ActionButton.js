@@ -7,7 +7,7 @@ export default function NewInput({ action, path }) {
     const navigate = useNavigate();
 
     return(
-        <Button onClick={() => navigate(`${path}`)}>
+        <Button>
             <p>{action}</p>
         </Button>
     );

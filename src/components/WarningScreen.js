@@ -6,7 +6,6 @@ import { AiOutlineMinusCircle } from "react-icons/ai"
 import { IconContext } from "react-icons";
 import { AuthContext } from "../providers/auth";
 
-
 export default function WarningScreen({ warningText }) {
 
     const { setTriggerWarning } = React.useContext(AuthContext);
@@ -16,7 +15,6 @@ export default function WarningScreen({ warningText }) {
             <WarningBox>
                 <h1>Aviso:<br/>{warningText}</h1>
             </WarningBox>
-
         </Container>
     );
 }
