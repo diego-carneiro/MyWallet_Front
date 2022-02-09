@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 import Header from "../components/Header";
 import PurchaseLog from "../components/PurchaseLog";
@@ -10,12 +12,34 @@ export default function MainMenu() {
 
     const navigate = useNavigate();
 
-    const name = "Zé"
+    const [user] = useState(() => {
+        const userStorage = localStorage.getItem("user");
+        return (JSON.parse(userStorage));
+    });
+    const [token, setToken] = useState(() => {
+        const tokenStorage = localStorage.getItem("userToken");
+        return ((tokenStorage));
+    });
+    const [infos, setInfos] = useState("");
+
+    useEffect(() => {
+        const promise = axios.get("http://localhost:5000/expense-control/",
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        promise.then(response => {
+            setInfos(response.data);
+        });
+        promise.catch(error => console.log(error))
+    }, []);   
 
     return (
         <Container>
-            <Header title={`Olá, ${name}`} />
-            <PurchaseLog />
+            <Header title={`Olá, ${user.name}`} />
+            <PurchaseLog infos={infos}/>
             <ButtonLayer />
         </Container>
     );

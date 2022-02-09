@@ -18,6 +18,10 @@ export default function Login() {
     }
     const [inputs, setInputs] = useState(initialValue);
 
+    const storage = (key, value) => {
+        localStorage.setItem(key, value);
+    }
+
     function onChange(ev) {
         const { name, value } = ev.target
 
@@ -29,7 +33,10 @@ export default function Login() {
 
         const promise = axios.post("http://localhost:5000/sign-in/", inputs);
         promise.then(response => {
+            storage("user", JSON.stringify(response.data));
+            storage("userToken", response.data.token);
             navigate("/main-menu");
+            console.log(response.data);
         });
         promise.catch(error => alert(error));
     }
