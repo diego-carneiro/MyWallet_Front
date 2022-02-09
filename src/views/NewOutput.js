@@ -1,17 +1,57 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 import Header from "../components/Header";
 import ActionButton from "../components/ActionButton";
 
 export default function NewOutput() {
 
-    return(
+    const navigate = useNavigate();
+
+    const initialValue = {
+        value: "",
+        description: "",
+    }
+    const [inputs, setInputs] = useState(initialValue);
+    function onChange(ev) {
+        const { name, value } = ev.target
+
+        setInputs({ ...inputs, [name]: value });
+    }
+
+    const [token, setToken] = useState(() => {
+        const tokenStorage = localStorage.getItem("userToken");
+        return ((tokenStorage));
+    });
+
+    function onSubmit(ev) {
+        ev.preventDefault();
+
+        const promise = axios.post("http://localhost:5000/new-deposit/", inputs,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        promise.then(response => {
+            console.log(response.data);
+            navigate("/main-menu");
+        });
+        promise.catch(error => alert(error));
+    }
+
+    return (
         <Container>
-            <Header title={"Nova saída"} icon={"return"}/>
-            <Input placeholder="Valor"/>
-            <Input placeholder="Descrição"/>
-            <ActionButton action={"Salvar saída"} path={"/main-menu"}/>
+            <Header title={"Nova saída"} icon={"return"} />
+            <Form onSubmit={onSubmit}>
+                <Input placeholder="Valor" type="number" name="value" onChange={onChange}/>
+                <Input placeholder="Descrição" type="text" name="description" onChange={onChange}/>
+                <ActionButton action={"Salvar saída"} path={"/main-menu"} />
+            </Form>
         </Container>
     );
 }
@@ -24,6 +64,12 @@ const Container = styled.div`
 
     display: flex;
     flex-direction: column;
+`
+const Form = styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 const Input = styled.input`
     width: 100%;

@@ -71,7 +71,6 @@ export default function SignUp() {
             {triggerWarning === "invalidEmail" && <WarningScreen warningText={"Insira um e-mail válido"}/>}
         </>
     );
-
 }
 // ::::::::::Styled-Components::::::::::
 const Container = styled.div`
