@@ -1,9 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { AiOutlinePlusCircle } from "react-icons/ai"
-import { AiOutlineMinusCircle } from "react-icons/ai"
-import { IconContext } from "react-icons";
 import { AuthContext } from "../providers/auth";
 
 export default function WarningScreen({ warningText }) {

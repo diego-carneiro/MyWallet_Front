@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react/cjs/react.development";
 import styled from "styled-components";
 
 export default function PurchaseLog({ infos }) {
 
-    console.log(infos);
+    const [balance, setBalance] = useState(0);
+
+    useEffect(() => {
+        let count = 0;
+
+        for (let e of infos) {
+            if (e.type === "input"){
+                count -= Number(e.value);
+            } else {
+                count += Number(e.value); 
+            }
+        }
+        setBalance(count);
+
+    }, [infos]);
+    console.log(balance);
 
     return (
         <>
@@ -14,12 +30,16 @@ export default function PurchaseLog({ infos }) {
                 :
                 <FilledContainer>
                     {infos.map((items) => (
-                        <PurchaseBox>
+                        <PurchaseBox valueColor={items.type}>
                             <h1>{items.date}</h1>
                             <Description>{items.description}</Description>
                             <h2>{items.value}</h2>
                         </PurchaseBox>
                     ))}
+                    <Balance valueColor={balance}>
+                        <h3>SALDO</h3>
+                        <p>{balance}</p>
+                    </Balance>
                 </FilledContainer>
             }
         </>
@@ -45,10 +65,16 @@ const Container = styled.div`
 `
 const FilledContainer = styled.div`
     width: 100%;
-    height: 446px;
+    min-height: 446px;
     padding: 24px 12px 10px 12px;
     background-color: #FFF;
-    border-radius: 5px;  
+    border-radius: 5px;
+    position: relative;    
+    
+    h3{
+        font-size: 17px;
+        font-weight: 700;
+    }
 `
 const PurchaseBox = styled.div`
     width: 100%;
@@ -64,8 +90,9 @@ const PurchaseBox = styled.div`
   
     h2{ 
         font-size: 16px;
-        color: #03AC00;
+        color: ${props => props.valueColor === "output" ? "#03AC00" : "#C70000"}
     }
+
 `
 const Description = styled.div`
     width: 100%;   
@@ -75,5 +102,19 @@ const Description = styled.div`
     p{
         font-size: 16px;
         color: #000;
+    }
+`
+const Balance = styled.div`
+    width: 92%;
+    height: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+
+    p{
+        font-size: 17px;
+        color: ${props => props.valueColor > 0 ? "#03AC00" : "#C70000"}
     }
 `

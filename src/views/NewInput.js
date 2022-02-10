@@ -2,15 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { AuthContext } from "../providers/auth";
 import axios from "axios";
 
 import Header from "../components/Header";
 import ActionButton from "../components/ActionButton";
+import WarningScreen from "../components/WarningScreen";
 
 export default function NewInput() {
 
     const navigate = useNavigate();
-
+    const { triggerWarning, setTriggerWarning } = React.useContext(AuthContext);
     const initialValue = {
         value: "",
         description: "",
@@ -30,6 +32,15 @@ export default function NewInput() {
     function onSubmit(ev) {
         ev.preventDefault();
 
+        if (inputs.description === "") {
+            setTriggerWarning("empty");
+            return;
+        }
+        if (!inputs.value) {
+            setTriggerWarning("valueMissing");
+            return;
+        }
+
         const promise = axios.post("http://localhost:5000/new-expense/", inputs,
             {
                 headers: {
@@ -45,14 +56,18 @@ export default function NewInput() {
     }
 
     return (
-        <Container>
-            <Header title={"Nova entrada"} icon={"return"} />
-            <Form onSubmit={onSubmit}>
-                <Input placeholder="Valor" type="number" name="value" onChange={onChange} />
-                <Input placeholder="Descrição" type="text" name="description" onChange={onChange} />
-                <ActionButton type="submit" action={"Salvar entrada"} />
-            </Form>
-        </Container>
+        <>
+            <Container triggered={triggerWarning}>
+                <Header title={"Nova entrada"} icon={"return"} />
+                <Form onSubmit={onSubmit}>
+                    <Input placeholder="Valor" type="number" name="value" onChange={onChange} />
+                    <Input placeholder="Descrição" type="text" name="description" onChange={onChange} />
+                    <ActionButton type="submit" action={"Salvar entrada"} />
+                </Form>
+            </Container>
+            {triggerWarning === "empty" && <WarningScreen warningText={"Adicione uma descrição"} />}
+            {triggerWarning === "valueMissing" && <WarningScreen warningText={"Adicione um valor"} />}
+        </>
     );
 }
 // ::::::::::Styled-Components::::::::::
@@ -61,9 +76,12 @@ const Container = styled.div`
     min-height: 100vh;
     background-color: #8C11BE;
     padding: 25px;
+    filter: brightness(${props => props.triggered ? "0.3" : "1"});
 
     display: flex;
     flex-direction: column;
+    position: fixed;
+    z-index: 2;
 `
 const Form = styled.form`
     width: 100%;
