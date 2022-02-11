@@ -31,7 +31,7 @@ export default function Login() {
     function onSubmit(ev) {
         ev.preventDefault();
 
-        const promise = axios.post("http://localhost:5000/sign-in/", inputs);
+        const promise = axios.post("https://api-my-wallet-t4.herokuapp.com/sign-in/", inputs);
         promise.then(response => {
             storage("user", JSON.stringify(response.data));
             storage("userToken", response.data.token);

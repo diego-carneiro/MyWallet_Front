@@ -38,7 +38,7 @@ export default function SignUp() {
             return;
         }
 
-        const promise = axios.post("http://localhost:5000/sign-up/", inputs);
+        const promise = axios.post("https://api-my-wallet-t4.herokuapp.com/sign-up/", inputs);
         promise.then(response => {
             navigate("/")
         });

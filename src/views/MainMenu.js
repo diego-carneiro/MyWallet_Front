@@ -23,7 +23,7 @@ export default function MainMenu() {
     const [infos, setInfos] = useState("");
 
     useEffect(() => {
-        const promise = axios.get("http://localhost:5000/expense-control/",
+        const promise = axios.get("https://api-my-wallet-t4.herokuapp.com/expense-control/",
             {
                 headers: {
                     "Authorization": `Bearer ${token}`

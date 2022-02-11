@@ -41,7 +41,7 @@ export default function NewOutput() {
             return;
         }
 
-        const promise = axios.post("http://localhost:5000/new-deposit/", inputs,
+        const promise = axios.post("https://api-my-wallet-t4.herokuapp.com/new-deposit/", inputs,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
